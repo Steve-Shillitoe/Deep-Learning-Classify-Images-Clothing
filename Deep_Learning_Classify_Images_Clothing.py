@@ -160,7 +160,7 @@ for i in range(num_images):
      plt.subplot(num_rows, 2*num_cols, 2*i+2)
      plot_value_array(i, predictions, test_labels)
 
-# Use the trained model to make a prediction about a single image
+# Use the trained model to make a prediction for a single image
 
 # Grab an image from the test dataset
 img = test_images[0]
