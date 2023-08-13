@@ -30,6 +30,7 @@ def plot_image(i, predictions_array, true_labels, images):
      100*np.max(predictions_array),
      class_names[true_label]),
      color=color)
+     plt.show()
 
 
 def plot_value_array(i, predictions_array, true_label):
@@ -43,6 +44,7 @@ def plot_value_array(i, predictions_array, true_label):
  
  thisplot[predicted_label].set_color('red')
  thisplot[true_label].set_color('blue')
+ plt.show()
 
 
 def normalize(images, labels):
@@ -101,6 +103,7 @@ model = tf.keras.Sequential([
  # Input layer
     tf.keras.layers.Flatten(input_shape=(28, 28, 1)), #input layer
     tf.keras.layers.Dense(128, activation=tf.nn.relu), #hidden layer
+    tf.keras.layers.Dense(64, activation=tf.nn.relu), #hidden layer
     tf.keras.layers.Dense(10, activation='softmax') #output layer
  ])
 
@@ -147,7 +150,7 @@ plot_value_array(i, predictions, test_labels)
 
 # Plot the first X test images, their predicted label, and the true label
 # Color correct predictions in blue, incorrect predictions in red
-num_rows = 5
+num_rows = 1
 num_cols = 3
 num_images = num_rows*num_cols
 plt.figure(figsize=(2*2*num_cols, 2*num_rows))
