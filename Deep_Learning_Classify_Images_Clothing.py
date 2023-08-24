@@ -1,3 +1,10 @@
+"""
+In this module a dense neural network is created using Tensorflow to classify images of clothing
+in the MNIST Fashion dataset.
+
+This module was created as part of the University of Sheffield in-house Deep Learning training.
+"""
+
 import tensorflow as tf
 
 # Import TensorFlow Datasets
@@ -77,15 +84,16 @@ test_dataset = test_dataset.cache()
 
 # Take a single image, and remove the color dimension by reshaping
 for image, label in test_dataset.take(1):
- break
+    break
 image = image.numpy().reshape((28,28))
-# Plot the image - voila a piece of fashion clothing
+# Display the image
 plt.figure()
 plt.imshow(image, cmap=plt.cm.binary)
 plt.colorbar()
 plt.grid(False)
 plt.show()
 
+#Display all the clothing types in a grid
 plt.figure(figsize=(10,10))
 i = 0
 for (image, label) in test_dataset.take(25):
@@ -99,6 +107,8 @@ for (image, label) in test_dataset.take(25):
      i += 1
 plt.show()
 
+
+#Create the deep learning model
 model = tf.keras.Sequential([
  # Input layer
     tf.keras.layers.Flatten(input_shape=(28, 28, 1)), #input layer
@@ -109,8 +119,8 @@ model = tf.keras.Sequential([
 
 #Compile the model
 model.compile(optimizer='adam',
- loss=tf.keras.losses.SparseCategoricalCrossentropy(),
- metrics=['accuracy'])
+    loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+    metrics=['accuracy'])
 
 #Train the model
 BATCH_SIZE = 32
@@ -141,15 +151,15 @@ plot_image(i, predictions, test_labels, test_images)
 plt.subplot(1,2,2)
 plot_value_array(i, predictions, test_labels)
 
-i = 12
-plt.figure(figsize=(6,3))
-plt.subplot(1,2,1)
-plot_image(i, predictions, test_labels, test_images)
-plt.subplot(1,2,2)
-plot_value_array(i, predictions, test_labels)
+# i = 12
+# plt.figure(figsize=(6,3))
+# plt.subplot(1,2,1)
+# plot_image(i, predictions, test_labels, test_images)
+# plt.subplot(1,2,2)
+# plot_value_array(i, predictions, test_labels)
 
 # Plot the first X test images, their predicted label, and the true label
-# Color correct predictions in blue, incorrect predictions in red
+# Correct predictions in blue, incorrect predictions in red
 num_rows = 1
 num_cols = 3
 num_images = num_rows*num_cols
@@ -161,19 +171,14 @@ for i in range(num_images):
      plot_value_array(i, predictions, test_labels)
 
 # Use the trained model to make a prediction for a single image
-
 # Grab an image from the test dataset
 img = test_images[0]
-print(img.shape)
-
 # Add the image to a batch where it's the only member.
 img = np.array([img])
-print(img.shape)
-
 predictions_single = model.predict(img)
-print(predictions_single)
+print('Prediction for the first test image = {}'.format(predictions_single))
 
 plot_value_array(0, predictions_single, test_labels)
 _ = plt.xticks(range(10), class_names, rotation=45)
 
-print('The most likely class = {}'.format(class_names[np.argmax(predictions_single[0])]))
+print('\nThe most likely class of the first test image = {}'.format(class_names[np.argmax(predictions_single[0])]))
