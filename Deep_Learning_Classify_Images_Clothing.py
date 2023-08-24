@@ -110,11 +110,11 @@ plt.show()
 
 #Create the deep learning model
 model = tf.keras.Sequential([
- # Input layer
     tf.keras.layers.Flatten(input_shape=(28, 28, 1)), #input layer
     tf.keras.layers.Dense(128, activation=tf.nn.relu), #hidden layer
     tf.keras.layers.Dense(64, activation=tf.nn.relu), #hidden layer
-    tf.keras.layers.Dense(10, activation='softmax') #output layer
+    #10 neurons in the output layer as there are 10 types of clothing
+    tf.keras.layers.Dense(units=10, activation='softmax') #output layer
  ])
 
 #Compile the model
